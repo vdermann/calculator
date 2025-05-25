@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Signika+Negative&display=swap');
+
+
+
+*, 
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Quicksand';
+}
+
+.calculadora {
+    width: 660px;
+    height: 720px;
+    margin: 0 auto;
+    margin-top: 80px;
+    background-color: #060807;
+    opacity: .95;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+    align-items: center;
+}
+
+.brand {
+    font-family: 'Signika Negative';
+    font-size: 32px;
+    font-weight: 500;
+    align-self: flex-start;
+    margin-left: 34px;
+    color: #fff;
+}
+
+.screen {
+    width: 588px;
+    height: 200px;
+    background-color: rgba(69, 89, 86, .10);
+    color: #fff;
+    font-size: 90px;
+    padding-right: 10px;
+    align-content: center;
+    text-align: right;
+}
+
+.btn-container {
+    width: 588px;
+    height: 360px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 22px;
+}
+
+.btn {
+    font-family: 'Quicksand';
+    font-size: 42px;
+    background-color: rgba(180, 197, 187, 0.05);
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+}
+
+.clear {
+    color: #7F9B9C;
+}
+
+.equal {
+    grid-column: 5 / 6;
+    grid-row: 3 / 5;
+    background-color: #7F9B9C;
+}
