@@ -39,7 +39,33 @@ let equalsPressed = false;
 let operatorPressed = false;
 
 
+numbers.forEach((number) => {
+    number.addEventListener("click", () => {
+        equalsPressed = false;
+        previousNumber = currentNumber;
 
+        if (displayScreen.textContent.length < 12 && equalsPressed === false) {
+            if (operatorPressed === false) {
+                if (displayScreen.textContent === "0" || displayScreen.textContent === previousNumber) {
+                    displayScreen.textContent = number.textContent;
+                    return;
+                } else {
+                    displayScreen.textContent += number.textContent;
+                    return;
+                }
+
+            } else {
+                if (displayScreen.textContent === "0" || displayScreen.textContent === currentNumber) {
+                    displayScreen.textContent = number.textContent;
+                    return;
+                } else {
+                    displayScreen.textContent += number.textContent;
+                    return;
+                }
+            }
+        }
+    })
+});
 
 
 function changeSign() {
@@ -50,9 +76,9 @@ function clear() {
     
 }
 
-// function delete() {
+function del() {
     
-// }
+}
 
 
 
