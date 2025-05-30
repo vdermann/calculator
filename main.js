@@ -1,22 +1,76 @@
-function getSum(firstNumber, secondNumber) {
-    return firstNumber + secondNumber;
+// ===== FUNCTIONS FOR THE OPERATIONS ===== //
+function sum(firstOperand, secondOperand) {
+    return firstOperand + secondOperand;
 }
 
-function getSubtraction(firstNumber, secondNumber) {
-    return firstNumber - secondNumber;
+function subtract(firstOperand, secondOperand) {
+    return firstOperand - secondOperand;
 }
 
-function getMultiplication(firstNumber, secondNumber) {
-    return firstNumber * secondNumber;
+function multiply(firstOperand, secondOperand) {
+    return firstOperand * secondOperand;
 }
 
-function getDivision(firstNumber, secondNumber) {
-    if (secondNumber === 0) return "negus error.";
-    return firstNumber / secondNumber;
+function divide(firstOperand, secondOperand) {
+    if (secondOperand === 0) return "Error.";
+    return firstOperand / secondOperand;
 }
 
-console.log(getSum(42, 18));
-console.log(getSubtraction(32, 83));
-console.log(getMultiplication(4, 10));
-console.log(getDivision(100, 10));
-console.log(getDivision(6, 0));
+
+// ===== BUTTONS ===== //
+const numbers = document.querySelectorAll(".number");       // List of Numbers.
+const operators = document.querySelectorAll(".operator");   // List of Operators.
+
+let displayScreen = document.querySelector(".screen");
+let plusMinus = document.querySelector(".plusminus");
+let decimal = document.querySelector(".point");
+let backspace = document.querySelector(".backspace");
+let allClear = document.querySelector(".clear");
+let equals = document.querySelector(".equal");
+
+// ===== VARIABLES ===== //
+let previousNumber = "";
+let currentNumber = "";
+let operator = "";
+let result = "";
+
+// ===== FLAGS ===== //
+let equalsPressed = false;
+let operatorPressed = false;
+
+
+
+
+
+function changeSign() {
+
+}
+
+function clear() {
+    
+}
+
+// function delete() {
+    
+// }
+
+
+
+function operate(operator) {
+    switch (operator) {
+        case "+":
+            sum(previousNumber, currentNumber);
+            break;
+        case ".":
+            subtract(previousNumber, currentNumber);
+            break;
+        case "*":
+            multiply(previousNumber, currentNumber);
+            break;
+        case "/":
+            divide(previousNumber, currentNumber);
+            break;
+        default:
+            break;
+    }
+}
