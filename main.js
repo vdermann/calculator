@@ -31,7 +31,7 @@ let equals = document.querySelector(".equal");
 // ===== VARIABLES ===== //
 let previousNumber = "";
 let currentNumber = "";
-let operator = "";
+let operatorSign = "";
 let result = "";
 
 // ===== FLAGS ===== //
@@ -68,35 +68,57 @@ numbers.forEach((number) => {
 });
 
 
-function changeSign() {
+operators.forEach((operator) => {
+    operator.addEventListener("click", () => {
+        if (displayScreen.textContent.length === "0") return;
+        operatorPressed = true;
+        operatorSign = operator.textContent;
+        currentNumber = displayScreen.textContent;
+    })
+})
 
-}
 
-function clear() {
+equals.addEventListener("click", () => {
+    operatorPressed = false;
+    equalsPressed = true;
+    currentNumber = displayScreen.textContent;
+    currentNumber = operate(previousNumber, operatorSign, currentNumber).toString();
+    displayScreen.textContent = currentNumber;
+})
+
+
+// function changeSign() {
+
+// }
+
+// function clear() {
     
-}
+// }
 
-function del() {
+// function del() {
     
-}
+// }
 
 
 
-function operate(operator) {
-    switch (operator) {
+function operate(previousNumber, operatorSign, currentNumber) {
+    previousNumber = parseFloat(previousNumber);
+    currentNumber = parseFloat(currentNumber);
+    switch (operatorSign) {
         case "+":
-            sum(previousNumber, currentNumber);
+            result = sum(previousNumber, currentNumber);
             break;
         case ".":
-            subtract(previousNumber, currentNumber);
+            result = subtract(previousNumber, currentNumber);
             break;
         case "*":
-            multiply(previousNumber, currentNumber);
+            result = multiply(previousNumber, currentNumber);
             break;
         case "/":
-            divide(previousNumber, currentNumber);
+            result = divide(previousNumber, currentNumber);
             break;
         default:
             break;
     }
+    return result;
 }
