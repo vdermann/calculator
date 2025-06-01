@@ -42,9 +42,14 @@ let operatorPressed = false;
 numbers.forEach((number) => {
     number.addEventListener("click", () => {
         equalsPressed = false;
+        // We assign the value of current Value to previous Value to save the next value in currentValue again.
         previousNumber = currentNumber;
 
+        // This allows only up to 12 characters to be entered.
         if (displayScreen.textContent.length < 12 && equalsPressed === false) {
+
+            // The value of the currentNumber is only saved when an operator is pressed. 
+            // As long as it is false, it will continue concatenating numbers onto the display screen.
             if (operatorPressed === false) {
                 if (displayScreen.textContent === "0" || displayScreen.textContent === previousNumber) {
                     displayScreen.textContent = number.textContent;
@@ -53,7 +58,7 @@ numbers.forEach((number) => {
                     displayScreen.textContent += number.textContent;
                     return;
                 }
-
+            
             } else {
                 if (displayScreen.textContent === "0" || displayScreen.textContent === currentNumber) {
                     displayScreen.textContent = number.textContent;
@@ -71,7 +76,8 @@ numbers.forEach((number) => {
 operators.forEach((operator) => {
     operator.addEventListener("click", () => {
         if (displayScreen.textContent.length === "0") return;
-        operatorPressed = true;
+        // When operatorPressed is true, we saved the value in currentNumber.
+        operatorPressed = true;                     
         operatorSign = operator.textContent;
         currentNumber = displayScreen.textContent;
     })
@@ -79,6 +85,8 @@ operators.forEach((operator) => {
 
 
 equals.addEventListener("click", () => {
+    if (operatorPressed === false) return;
+    // When we perform the operation, we set the value of operatorPressed back to false.
     operatorPressed = false;
     equalsPressed = true;
     currentNumber = displayScreen.textContent;
@@ -102,13 +110,14 @@ equals.addEventListener("click", () => {
 
 
 function operate(previousNumber, operatorSign, currentNumber) {
+    // The values ​​are strings, so we convert them to numbers before performing the operation.
     previousNumber = parseFloat(previousNumber);
     currentNumber = parseFloat(currentNumber);
     switch (operatorSign) {
         case "+":
             result = sum(previousNumber, currentNumber);
             break;
-        case ".":
+        case "-":
             result = subtract(previousNumber, currentNumber);
             break;
         case "*":
