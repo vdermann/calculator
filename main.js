@@ -47,18 +47,17 @@ numbers.forEach((number) => {
 
         // This allows only up to 12 characters to be entered.
         if (displayScreen.textContent.length < 12 && equalsPressed === false) {
-
             // The value of the currentNumber is only saved when an operator is pressed. 
             // As long as it is false, it will continue concatenating numbers onto the display screen.
             if (operatorPressed === false) {
-                if (displayScreen.textContent === "0" || displayScreen.textContent === previousNumber) {
+                // previousNumber represents the last result obtained, if a digit is pressed after obtaining a result a new operation should be started.
+                if (displayScreen.textContent === "0" || displayScreen.textContent === previousNumber) { 
                     displayScreen.textContent = number.textContent;
                     return;
                 } else {
                     displayScreen.textContent += number.textContent;
                     return;
                 }
-            
             } else {
                 if (displayScreen.textContent === "0" || displayScreen.textContent === currentNumber) {
                     displayScreen.textContent = number.textContent;
@@ -90,23 +89,36 @@ equals.addEventListener("click", () => {
     operatorPressed = false;
     equalsPressed = true;
     currentNumber = displayScreen.textContent;
-    currentNumber = operate(previousNumber, operatorSign, currentNumber).toString();
+    currentNumber = operate(previousNumber, operatorSign, currentNumber);
     displayScreen.textContent = currentNumber;
 })
 
 
-// function changeSign() {
+// All variables are reset.
+allClear.addEventListener("click", () => {
+    displayScreen.textContent = "0";
+    currentNumber = "";
+    previousNumber = "";
+    operatorSign = "";
+    operatorPressed = false;
+})
 
-// }
 
-// function clear() {
-    
-// }
+// Change the sign of the number.
+plusMinus.addEventListener("click", () => {
+    displayScreen.textContent = parseFloat(displayScreen.textContent) * -1;
+})
 
-// function del() {
-    
-// }
 
+// Deletes the last digit entered
+backspace.addEventListener("click", () => {
+    // Decided to make the backspace clear the calculator in case it is pressed after getting a result.
+    if (displayScreen.textContent.length <= 1 || displayScreen.textContent === result) {
+        displayScreen.textContent = "0";
+        return;
+    }
+    displayScreen.textContent = displayScreen.textContent.slice(0, -1);
+})
 
 
 function operate(previousNumber, operatorSign, currentNumber) {
@@ -129,5 +141,6 @@ function operate(previousNumber, operatorSign, currentNumber) {
         default:
             break;
     }
-    return result;
+    result = result.toString();
+    return result;  
 }
