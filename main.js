@@ -23,7 +23,7 @@ const operators = document.querySelectorAll(".operator");   // List of Operators
 
 let displayScreen = document.querySelector(".screen");
 let plusMinus = document.querySelector(".plusminus");
-let decimal = document.querySelector(".point");
+let decimalPoint = document.querySelector(".point");
 let backspace = document.querySelector(".backspace");
 let allClear = document.querySelector(".clear");
 let equals = document.querySelector(".equal");
@@ -32,7 +32,7 @@ let equals = document.querySelector(".equal");
 let previousNumber = "";
 let currentNumber = "";
 let operatorSign = "";
-let result = "";
+let result;
 
 // ===== FLAGS ===== //
 let equalsPressed = false;
@@ -110,6 +110,13 @@ plusMinus.addEventListener("click", () => {
 })
 
 
+// Add the decimal point only if it has not already been included, if it has already been included it is ignored.
+decimalPoint.addEventListener("click", () => {
+    if (displayScreen.textContent.includes(".")) return;
+    displayScreen.textContent += decimalPoint.textContent;
+})
+
+
 // Deletes the last digit entered
 backspace.addEventListener("click", () => {
     // Decided to make the backspace clear the calculator in case it is pressed after getting a result.
@@ -122,6 +129,8 @@ backspace.addEventListener("click", () => {
 
 
 function operate(previousNumber, operatorSign, currentNumber) {
+    // Result is reset to zero to be able to use toFixed().
+    result = 0;
     // The values ​​are strings, so we convert them to numbers before performing the operation.
     previousNumber = parseFloat(previousNumber);
     currentNumber = parseFloat(currentNumber);
@@ -140,6 +149,10 @@ function operate(previousNumber, operatorSign, currentNumber) {
             break;
         default:
             break;
+    }
+    // Added extra lines here to round the result to two decimal places in case it has them.
+    if (result.toString().includes(".")) {
+        result = result.toFixed(2);
     }
     result = result.toString();
     return result;  
