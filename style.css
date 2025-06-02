@@ -36,15 +36,28 @@
     color: #fff;
 }
 
-.screen {
+
+.screen-container {
     width: 588px;
     height: 200px;
     background-color: rgba(69, 89, 86, .10);
-    color: #fff;
-    font-size: 88px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
     padding-right: 10px;
-    align-content: center;
-    text-align: right;
+    gap: 10px;
+}
+
+.historial {
+    color: #7F9B9C;
+    font-size: 20px;
+    padding-right: 5px;
+}
+
+.screen {
+    color: #fff;
+    font-size: 84px;
 }
 
 .btn-container {

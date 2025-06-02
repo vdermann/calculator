@@ -20,7 +20,7 @@ function divide(firstOperand, secondOperand) {
 // ===== BUTTONS ===== //
 const numbers = document.querySelectorAll(".number");       // List of Numbers.
 const operators = document.querySelectorAll(".operator");   // List of Operators.
-
+let displayHistorial = document.querySelector(".historial");
 let displayScreen = document.querySelector(".screen");
 let plusMinus = document.querySelector(".plusminus");
 let decimalPoint = document.querySelector(".point");
@@ -89,6 +89,8 @@ equals.addEventListener("click", () => {
     operatorPressed = false;
     equalsPressed = true;
     currentNumber = displayScreen.textContent;
+    // Shows the last operation performed before the value of current number is modified on the next line
+    displayHistorial.textContent = `${previousNumber} ${operatorSign} ${currentNumber} =`;  
     currentNumber = operate(previousNumber, operatorSign, currentNumber);
     displayScreen.textContent = currentNumber;
 })
@@ -97,6 +99,7 @@ equals.addEventListener("click", () => {
 // All variables are reset.
 allClear.addEventListener("click", () => {
     displayScreen.textContent = "0";
+    displayHistorial.textContent = "";
     currentNumber = "";
     previousNumber = "";
     operatorSign = "";
