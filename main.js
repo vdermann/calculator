@@ -160,3 +160,76 @@ function operate(previousNumber, operatorSign, currentNumber) {
     result = result.toString();
     return result;  
 }
+
+
+
+
+
+// ===== KEYBOARD SUPPORT ===== //
+document.addEventListener("keydown", (e) => {
+    equalsPressed = false;
+    // We assign the value of current Value to previous Value to save the next value in currentValue again.
+    previousNumber = currentNumber;
+
+    if (/[0-9]/.test(e.key)) {
+        // This allows only up to 12 characters to be entered.
+        if (displayScreen.textContent.length < 12 && equalsPressed === false) {
+            // The value of the currentNumber is only saved when an operator is pressed. 
+            // As long as it is false, it will continue concatenating numbers onto the display screen.
+            if (operatorPressed === false) {
+                // previousNumber represents the last result obtained, if a digit is pressed after obtaining a result a new operation should be started.
+                if (displayScreen.textContent === "0" || displayScreen.textContent === previousNumber) { 
+                    displayScreen.textContent = e.key;
+                    return;
+                } else {
+                    displayScreen.textContent += e.key;
+                    return;
+                }
+            } else {
+                if (displayScreen.textContent === "0" || displayScreen.textContent === currentNumber) {
+                    displayScreen.textContent = e.key;
+                    return;
+                } else {
+                    displayScreen.textContent += e.key;
+                    return;
+                }
+            }
+        }
+
+    } else if (/[\.\,]/.test(e.key)) {
+        if (displayScreen.textContent.includes(".")) return;
+        displayScreen.textContent += decimalPoint.textContent;
+
+    } else if (
+        e.key === "+" ||
+        e.key === "-" ||
+        e.key === "*" || 
+        e.key === "/"
+        ) {
+        if (displayScreen.textContent.length === "0") return;
+        // When operatorPressed is true, we saved the value in currentNumber.
+        operatorPressed = true;                     
+        operatorSign = e.key;
+        currentNumber = displayScreen.textContent;
+
+    } else if (e.key === "Enter") {
+        if (operatorPressed === false) return;
+        // When we perform the operation, we set the value of operatorPressed back to false.
+        operatorPressed = false;
+        equalsPressed = true;
+        currentNumber = displayScreen.textContent;
+        // Shows the last operation performed before the value of current number is modified on the next line
+        displayHistorial.textContent = `${previousNumber} ${operatorSign} ${currentNumber} =`;  
+        currentNumber = operate(previousNumber, operatorSign, currentNumber);
+        displayScreen.textContent = currentNumber;
+
+    } else if (e.key === "Backspace") {
+        // Decided to make the backspace clear the calculator in case it is pressed after getting a result.
+        if (displayScreen.textContent.length <= 1 || displayScreen.textContent === result) {
+            displayScreen.textContent = "0";
+            return;
+        }
+        displayScreen.textContent = displayScreen.textContent.slice(0, -1);
+    }
+
+})
