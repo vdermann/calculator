@@ -46,12 +46,15 @@ numbers.forEach((number) => {
         previousNumber = currentNumber;
 
         // This allows only up to 12 characters to be entered.
-        if (displayScreen.textContent.length < 12 && equalsPressed === false) {
+        if (displayScreen.textContent.length < 12 && equalsPressed === false ||
+            displayScreen.textContent.length === currentNumber.length
+        ) {
             // The value of the currentNumber is only saved when an operator is pressed. 
             // As long as it is false, it will continue concatenating numbers onto the display screen.
             if (operatorPressed === false) {
                 // previousNumber represents the last result obtained, if a digit is pressed after obtaining a result a new operation should be started.
                 if (displayScreen.textContent === "0" || displayScreen.textContent === previousNumber) { 
+                    displayHistorial.textContent = "";
                     displayScreen.textContent = number.textContent;
                     return;
                 } else {
