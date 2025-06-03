@@ -47,7 +47,7 @@ numbers.forEach((number) => {
 
         // This allows only up to 12 characters to be entered.
         if (displayScreen.textContent.length < 12 && equalsPressed === false ||
-            displayScreen.textContent.length === currentNumber.length
+            displayScreen.textContent.length === currentNumber.length // In case any result exceeds the number of 12 characters.
         ) {
             // The value of the currentNumber is only saved when an operator is pressed. 
             // As long as it is false, it will continue concatenating numbers onto the display screen.
@@ -127,6 +127,7 @@ decimalPoint.addEventListener("click", () => {
 backspace.addEventListener("click", () => {
     // Decided to make the backspace clear the calculator in case it is pressed after getting a result.
     if (displayScreen.textContent.length <= 1 || displayScreen.textContent === result) {
+        displayHistorial.textContent = "";  
         displayScreen.textContent = "0";
         return;
     }
@@ -168,6 +169,9 @@ function operate(previousNumber, operatorSign, currentNumber) {
 
 
 
+
+
+
 // ===== KEYBOARD SUPPORT ===== //
 document.addEventListener("keydown", (e) => {
     equalsPressed = false;
@@ -176,12 +180,14 @@ document.addEventListener("keydown", (e) => {
 
     if (/[0-9]/.test(e.key)) {
         // This allows only up to 12 characters to be entered.
-        if (displayScreen.textContent.length < 12 && equalsPressed === false) {
+        if (displayScreen.textContent.length < 12 && equalsPressed === false ||
+            displayScreen.textContent.length === currentNumber.length) {
             // The value of the currentNumber is only saved when an operator is pressed. 
             // As long as it is false, it will continue concatenating numbers onto the display screen.
             if (operatorPressed === false) {
                 // previousNumber represents the last result obtained, if a digit is pressed after obtaining a result a new operation should be started.
                 if (displayScreen.textContent === "0" || displayScreen.textContent === previousNumber) { 
+                    displayHistorial.textContent = "";
                     displayScreen.textContent = e.key;
                     return;
                 } else {
@@ -229,6 +235,7 @@ document.addEventListener("keydown", (e) => {
     } else if (e.key === "Backspace") {
         // Decided to make the backspace clear the calculator in case it is pressed after getting a result.
         if (displayScreen.textContent.length <= 1 || displayScreen.textContent === result) {
+            displayHistorial.textContent = "";  
             displayScreen.textContent = "0";
             return;
         }
