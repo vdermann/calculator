@@ -178,12 +178,12 @@ function operate(previousNumber, operatorSign, currentNumber) {
 
 
 
-
-
 // ===== KEYBOARD SUPPORT ===== // (duplicated code).
 document.addEventListener("keydown", (e) => {
 
     if (/[0-9]/.test(e.key)) {
+        // To prevent function keys from being displayed.
+        if (e.key.includes("F")) return;
         equalsPressed = false;
         // We assign the value of current Value to previous Value to save the next value in currentValue again.
         previousNumber = currentNumber;
