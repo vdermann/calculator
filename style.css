@@ -77,6 +77,16 @@
     color: #fff;
     text-align: center;
     cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:active {
+    background-color: rgba(180, 197, 187, .5);
+    transform: translateY(8px);
+}
+
+.active {
+    background-color: #7F9B9C;
 }
 
 .clear {

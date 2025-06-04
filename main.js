@@ -28,17 +28,20 @@ let backspace = document.querySelector(".backspace");
 let allClear = document.querySelector(".clear");
 let equals = document.querySelector(".equal");
 
+
 // ===== VARIABLES ===== //
 let previousNumber = "";
 let currentNumber = "";
 let operatorSign = "";
 let result;
 
+
 // ===== FLAGS ===== //
 let equalsPressed = false;
 let operatorPressed = false;
 
 
+// ===== NUMBERS ===== //
 numbers.forEach((number) => {
     number.addEventListener("click", () => {
         equalsPressed = false;
@@ -56,6 +59,7 @@ numbers.forEach((number) => {
                 if (displayScreen.textContent === "0" || displayScreen.textContent === previousNumber) { 
                     displayHistorial.textContent = "";
                     displayScreen.textContent = number.textContent;
+                    operators.forEach(op => op.classList.remove("active"));
                     return;
                 } else {
                     displayScreen.textContent += number.textContent;
@@ -75,6 +79,7 @@ numbers.forEach((number) => {
 });
 
 
+// ===== OPERATORS ===== //
 operators.forEach((operator) => {
     operator.addEventListener("click", () => {
         if (displayScreen.textContent.length === "0") return;
@@ -82,9 +87,11 @@ operators.forEach((operator) => {
         operatorPressed = true;                     
         operatorSign = operator.textContent;
         currentNumber = displayScreen.textContent;
+        // Changes the background color of the pressed button to make the action being performed more visible and understandable.
+        operators.forEach(op => op.classList.remove("active"));
+        operator.classList.add("active");
     })
 })
-
 
 equals.addEventListener("click", () => {
     if (operatorPressed === false) return;
@@ -99,6 +106,7 @@ equals.addEventListener("click", () => {
 })
 
 
+// ===== EXTRA FUNCTIONALITIES ===== //
 // All variables are reset.
 allClear.addEventListener("click", () => {
     displayScreen.textContent = "0";
@@ -107,14 +115,13 @@ allClear.addEventListener("click", () => {
     previousNumber = "";
     operatorSign = "";
     operatorPressed = false;
+    operators.forEach(op => op.classList.remove("active"));
 })
-
 
 // Change the sign of the number.
 plusMinus.addEventListener("click", () => {
     displayScreen.textContent = parseFloat(displayScreen.textContent) * -1;
 })
-
 
 // Add the decimal point only if it has not already been included, if it has already been included it is ignored.
 decimalPoint.addEventListener("click", () => {
@@ -122,19 +129,20 @@ decimalPoint.addEventListener("click", () => {
     displayScreen.textContent += decimalPoint.textContent;
 })
 
-
 // Deletes the last digit entered
 backspace.addEventListener("click", () => {
     // Decided to make the backspace clear the calculator in case it is pressed after getting a result.
     if (displayScreen.textContent.length <= 1 || displayScreen.textContent === result) {
         displayHistorial.textContent = "";  
         displayScreen.textContent = "0";
+        operators.forEach(op => op.classList.remove("active"));
         return;
     }
     displayScreen.textContent = displayScreen.textContent.slice(0, -1);
 })
 
 
+// ===== OPERATION ===== //
 function operate(previousNumber, operatorSign, currentNumber) {
     // Result is reset to zero to be able to use toFixed().
     result = 0;
@@ -172,13 +180,13 @@ function operate(previousNumber, operatorSign, currentNumber) {
 
 
 
-// ===== KEYBOARD SUPPORT ===== //
+// ===== KEYBOARD SUPPORT ===== // (duplicated code).
 document.addEventListener("keydown", (e) => {
-    equalsPressed = false;
-    // We assign the value of current Value to previous Value to save the next value in currentValue again.
-    previousNumber = currentNumber;
 
     if (/[0-9]/.test(e.key)) {
+        equalsPressed = false;
+        // We assign the value of current Value to previous Value to save the next value in currentValue again.
+        previousNumber = currentNumber;
         // This allows only up to 12 characters to be entered.
         if (displayScreen.textContent.length < 12 && equalsPressed === false ||
             displayScreen.textContent.length === currentNumber.length) {
@@ -189,6 +197,7 @@ document.addEventListener("keydown", (e) => {
                 if (displayScreen.textContent === "0" || displayScreen.textContent === previousNumber) { 
                     displayHistorial.textContent = "";
                     displayScreen.textContent = e.key;
+                    operators.forEach(op => op.classList.remove("active"));
                     return;
                 } else {
                     displayScreen.textContent += e.key;
@@ -220,7 +229,12 @@ document.addEventListener("keydown", (e) => {
         operatorPressed = true;                     
         operatorSign = e.key;
         currentNumber = displayScreen.textContent;
-
+        // Changes the background color of the pressed button to make the action being performed more visible and understandable.
+        operators.forEach(op => op.classList.remove("active"))
+        operators.forEach(op => {
+            if (op.textContent === e.key) op.classList.add("active");
+        });
+        
     } else if (e.key === "Enter") {
         if (operatorPressed === false) return;
         // When we perform the operation, we set the value of operatorPressed back to false.
@@ -237,6 +251,7 @@ document.addEventListener("keydown", (e) => {
         if (displayScreen.textContent.length <= 1 || displayScreen.textContent === result) {
             displayHistorial.textContent = "";  
             displayScreen.textContent = "0";
+            operators.forEach(op => op.classList.remove("active"));
             return;
         }
         displayScreen.textContent = displayScreen.textContent.slice(0, -1);
