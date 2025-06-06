@@ -37,19 +37,17 @@ let result;
 
 
 // ===== FLAGS ===== //
-let equalsPressed = false;
 let operatorPressed = false;
 
 
 // ===== NUMBERS ===== //
 numbers.forEach((number) => {
     number.addEventListener("click", () => {
-        equalsPressed = false;
         // We assign the value of current Value to previous Value to save the next value in currentValue again.
         previousNumber = currentNumber;
 
         // This allows only up to 12 characters to be entered.
-        if (displayScreen.textContent.length < 12 && equalsPressed === false ||
+        if (displayScreen.textContent.length < 12 ||
             displayScreen.textContent.length === currentNumber.length // In case any result exceeds the number of 12 characters.
         ) {
             // The value of the currentNumber is only saved when an operator is pressed. 
@@ -97,7 +95,6 @@ equals.addEventListener("click", () => {
     if (operatorPressed === false) return;
     // When we perform the operation, we set the value of operatorPressed back to false.
     operatorPressed = false;
-    equalsPressed = true;
     currentNumber = displayScreen.textContent;
     // Shows the last operation performed before the value of current number is modified on the next line
     displayHistorial.textContent = `${previousNumber} ${operatorSign} ${currentNumber} =`;  
@@ -184,11 +181,10 @@ document.addEventListener("keydown", (e) => {
     if (/[0-9]/.test(e.key)) {
         // To prevent function keys from being displayed.
         if (e.key.includes("F")) return;
-        equalsPressed = false;
         // We assign the value of current Value to previous Value to save the next value in currentValue again.
         previousNumber = currentNumber;
         // This allows only up to 12 characters to be entered.
-        if (displayScreen.textContent.length < 12 && equalsPressed === false ||
+        if (displayScreen.textContent.length < 12 ||
             displayScreen.textContent.length === currentNumber.length) {
             // The value of the currentNumber is only saved when an operator is pressed. 
             // As long as it is false, it will continue concatenating numbers onto the display screen.
@@ -239,7 +235,6 @@ document.addEventListener("keydown", (e) => {
         if (operatorPressed === false) return;
         // When we perform the operation, we set the value of operatorPressed back to false.
         operatorPressed = false;
-        equalsPressed = true;
         currentNumber = displayScreen.textContent;
         // Shows the last operation performed before the value of current number is modified on the next line
         displayHistorial.textContent = `${previousNumber} ${operatorSign} ${currentNumber} =`;  
