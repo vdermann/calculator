@@ -87,6 +87,10 @@ body {
     transition: 0.3s;
 }
 
+.btn:hover:not(.equal):not(.active) {
+    background-color: rgba(180, 197, 187, .2);
+}
+
 .btn:active {
     background-color: rgba(180, 197, 187, .5);
     transform: translateY(8px);
