@@ -53,7 +53,7 @@ function updateDisplay(content, resetHistorial = false) {
 function handleNumberInput(number) {
     previousNumber = currentNumber;
     // This allows only up to 12 characters to be entered.
-    if (isValidLength(displayScreen.textContent) < 12 ||
+    if (isValidLength(displayScreen.textContent) ||
         displayScreen.textContent.length === currentNumber.length // In case any result exceeds the number of 12 characters.
     ) {
         // The value of the currentNumber is only saved when an operator is pressed. 
